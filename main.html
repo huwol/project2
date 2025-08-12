@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>HODU Landing</title>
+  <!-- 폰트 (인터넷 연결 시 자동 로드) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#F6EDE3;
+      --text:#0F172A;
+      --muted:#6B7280;
+      --brand:#D97652;
+      --brand-strong:#C76545;
+      --dark:#0F1B2A;
+      --card-shadow:0 18px 40px rgba(0,0,0,.18);
+      --soft-shadow:0 10px 30px rgba(0,0,0,.12);
+      --radius-xl:28px;
+      --radius-lg:22px;
+      --radius-md:16px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{
+      font-family: Inter, "Noto Sans KR", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+      color:var(--text);
+      background:var(--bg);
+      line-height:1.55;
+    }
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{width:min(1180px, 92%);margin:0 auto}
+
+    /* Header */
+    header{
+      position:sticky;top:0;z-index:50;
+      background:linear-gradient(#F6EDE3,#F6EDE3E6);
+      backdrop-filter:saturate(140%) blur(6px);
+      border-bottom:1px solid rgba(15,23,42,.06);
+    }
+    .nav{
+      height:72px; display:flex; align-items:center; justify-content:space-between;
+      gap:24px;
+    }
+    .brand{
+      font-weight:900; letter-spacing:.8px; font-size:32px;
+    }
+    .brand .dot{color:var(--brand)}
+    .links{display:flex; gap:28px; align-items:center}
+    .links a{font-weight:600; color:#374151}
+    .btn{
+      border:0; cursor:pointer; padding:12px 22px; border-radius:999px; font-weight:700;
+      background:var(--brand); color:#fff; box-shadow:0 8px 20px rgba(217,118,82,.35);
+      transition:transform .08s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .btn:hover{transform:translateY(-1px); background:var(--brand-strong)}
+    .btn.outline{
+      background:#fff;color:var(--brand); box-shadow:inset 0 0 0 2px var(--brand); 
+    }
+
+    /* Hero */
+    .hero{padding:72px 0 40px}
+    .hero-wrap{display:grid; grid-template-columns: 1.05fr .95fr; align-items:center; gap:24px}
+    h1{
+      font-size: clamp(36px, 4.5vw, 64px);
+      line-height:1.1; margin:0 0 18px; font-weight:900; letter-spacing:-.5px;
+    }
+    .lead{color:var(--muted);max-width:56ch}
+    .hero-cta{margin-top:26px}
+    .sticker{
+      width:min(560px,100%);
+      border-radius:44px;
+      background:#fff;
+      padding:16px;
+      box-shadow:0 0 0 14px #fff, var(--soft-shadow);
+    }
+    .sticker img{border-radius:36px}
+
+    /* Section: split */
+    .split{padding:40px 0 28px}
+    .split-wrap{display:grid; grid-template-columns:1.08fr .92fr; gap:60px; align-items:center}
+    .wide-img{
+      border-radius:var(--radius-xl);
+      box-shadow:var(--card-shadow);
+      overflow:hidden;
+    }
+    .kicker{font-weight:800; font-size:28px; line-height:1.25; letter-spacing:-.2px}
+    .sub{color:var(--muted); margin-top:10px}
+
+    /* Section: center title + cards */
+    .center{
+      padding:34px 0 18px;
+      text-align:center;
+    }
+    .center h2{
+      font-size: clamp(28px, 3.2vw, 44px);
+      color:#CF6E4F; letter-spacing:-.2px; margin:0 0 10px; font-weight:900;
+    }
+    .center p{color:var(--muted); margin:.2rem 0}
+    .cards{
+      margin:34px auto 14px;
+      display:grid; grid-template-columns: repeat(3, 1fr); gap:36px;
+    }
+    .card{
+      border-radius:24px; overflow:hidden; box-shadow:var(--card-shadow); background:#fff;
+    }
+    .below-text{
+      margin:22px auto 10px;
+      max-width:86ch; color:var(--muted); text-align:left;
+    }
+    .action-row{display:flex; justify-content:flex-end; margin:12px 0 0}
+
+    /* Subscribe banner */
+    .subscribe{
+      margin:68px 0 0; position:relative; isolation:isolate;
+      padding-bottom:120px;
+    }
+    .bg-cat{
+      position:absolute; inset:auto 0 0 0; height:380px; object-fit:cover; width:100%;
+      opacity:.25; filter:grayscale(.1);
+      z-index:-2;
+    }
+    .sub-card{
+      background:#132033; color:#fff; border-radius:28px;
+      padding:36px clamp(18px, 4vw, 42px);
+      box-shadow:0 24px 60px rgba(0,0,0,.35);
+      display:grid; grid-template-columns: 1.1fr .9fr; gap:24px; align-items:center;
+    }
+    .sub-title{font-size: clamp(26px, 3.2vw, 36px); margin:0 0 10px; font-weight:900}
+    .sub-desc{color:#CBD5E1; margin:4px 0}
+    .input-wrap{
+      display:flex; align-items:center; gap:12px; width:100%;
+      background:#fff; border-radius:999px; padding:10px 12px 10px 16px;
+      box-shadow:inset 0 0 0 2px #E5E7EB;
+    }
+    .input-wrap svg{flex:0 0 auto}
+    .input-wrap input{
+      border:0; outline:0; font-size:16px; width:100%; background:transparent;
+    }
+    .input-wrap .btn{margin-left:8px; padding:12px 20px}
+
+    /* Footer */
+    footer{padding:26px 0 60px; background:#fff}
+    .foot{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:16px;
+    }
+    .social{display:flex; gap:14px}
+    .social a{
+      width:40px; height:40px; border-radius:50%;
+      display:grid; place-items:center; background:#EA8C63; color:#fff;
+      box-shadow:0 8px 18px rgba(217,118,82,.35);
+    }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .hero-wrap, .split-wrap, .sub-card{grid-template-columns:1fr}
+      .sticker{margin:0 auto}
+      .action-row{justify-content:center}
+      .cards{grid-template-columns:1fr 1fr}
+      .foot{flex-direction:column; gap:18px}
+    }
+    @media (max-width:640px){
+      .cards{grid-template-columns:1fr}
+      .nav{height:auto; padding:14px 0 10px}
+      .links{gap:16px; flex-wrap:wrap}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="container nav">
+      <div class="brand">H<span class="dot">O</span>DU</div>
+      <nav class="links">
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Support</a>
+        <a class="btn" href="#">Download</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-wrap">
+      <div>
+        <h1>Lorem Ipsum is simply<br>dummy text of the printing and</h1>
+        <p class="lead">
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+          Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown
+        </p>
+        <div class="hero-cta">
+          <a class="btn" href="#">Download</a>
+        </div>
+      </div>
+      <div class="sticker">
+        <img src="hero-cat.png" alt="Cat wearing a box" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Split section -->
+  <section class="split">
+    <div class="container split-wrap">
+      <figure class="wide-img">
+        <img src="wide-cat.jpg" alt="Cat on bed">
+      </figure>
+      <div>
+        <div class="kicker">Lorem Ipsum is simply<br>dummy text of the printing<br>and dummy text</div>
+        <p class="sub">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Center title + cards -->
+  <section class="center">
+    <div class="container">
+      <h2>dummy text of the printing and dummy</h2>
+      <p>Lorem Ipsum is simply <strong>dummy text</strong> of the printing and typesetting industry.</p>
+      <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown</p>
+
+      <div class="cards">
+        <div class="card"><img src="card-1.jpg" alt="Cat 1"></div>
+        <div class="card"><img src="card-2.jpg" alt="Cat 2"></div>
+        <div class="card"><img src="card-3.jpg" alt="Cat 3"></div>
+      </div>
+
+      <div class="below-text">
+        <p>
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+          Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown
+          Ipsum is simply dummy text of the printing and typesetting industry.
+        </p>
+      </div>
+      <div class="action-row">
+        <a class="btn outline" href="#">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Subscribe -->
+  <section class="subscribe">
+    <img class="bg-cat" src="bg-cat.jpg" alt="">
+    <div class="container sub-card">
+      <div>
+        <h3 class="sub-title">Subscribe to our Blog post</h3>
+        <p class="sub-desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+        <p class="sub-desc">Lorem Ipsum has been the industry’s standard dummy text</p>
+      </div>
+      <form onsubmit="event.preventDefault(); alert('구독 완료! (데모)');" class="input-wrap">
+        <!-- mail icon -->
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 6h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z" stroke="#9CA3AF" stroke-width="1.8" />
+          <path d="M22 8 12 13 2 8" stroke="#9CA3AF" stroke-width="1.8" fill="none"/>
+        </svg>
+        <input type="email" placeholder="Enter your e-mail address" required>
+        <button class="btn" type="submit">Subscribe</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container foot">
+      <div class="brand">H<span class="dot">O</span>DU</div>
+      <div class="social">
+        <a href="#" aria-label="Blog (b)">b</a>
+        <a href="#" aria-label="Instagram">
+          <!-- instagram glyph -->
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <rect x="3" y="3" width="18" height="18" rx="5" stroke="white" stroke-width="2"/>
+            <circle cx="12" cy="12" r="4" stroke="white" stroke-width="2"/>
+            <circle cx="17.5" cy="6.5" r="1.2" fill="white"/>
+          </svg>
+        </a>
+        <a href="#" aria-label="Facebook">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M15 4h-2a4 4 0 0 0-4 4v2H7v3h2v7h3v-7h2.2l.8-3H12V8a1 1 0 0 1 1-1h2V4z"/></svg>
+        </a>
+        <a href="#" aria-label="YouTube">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M23 7.5a4 4 0 0 0-2.8-2.9C18.6 4 12 4 12 4s-6.6 0-8.2.6A4 4 0 0 0 1 7.5 41.5 41.5 0 0 0 1 12a41.5 41.5 0 0 0  . -?"/></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
