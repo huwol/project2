@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>HODU Landing</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#F6EDE3; --text:#0F172A; --muted:#6B7280;
+      --brand:#D97652; --brand-strong:#C76545;
+      --card-shadow:0 18px 40px rgba(0,0,0,.18);
+      --soft-shadow:0 10px 30px rgba(0,0,0,.12);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{
+      font-family: Inter, "Noto Sans KR", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+      color:var(--text); background:var(--bg); line-height:1.55;
+    }
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{width:min(1180px, 92%);margin:0 auto}
+    body.modal-open{overflow:hidden}
+
+    /* Header */
+    header{
+      position:sticky;top:0;z-index:50;
+      background:linear-gradient(#F6EDE3,#F6EDE3E6);
+      backdrop-filter:saturate(140%) blur(6px);
+      border-bottom:1px solid rgba(15,23,42,.06);
+    }
+    .nav{height:72px; display:flex; align-items:center; justify-content:space-between; gap:24px}
+    .brand-img{height:32px; width:auto; display:block}          /* 상단 로고 */
+    .links{display:flex; gap:28px; align-items:center}
+    .links a{font-weight:600; color:#374151}
+    .btn{
+      border:0; cursor:pointer; padding:12px 22px; border-radius:999px; font-weight:700;
+      background:var(--brand); color:#fff; box-shadow:0 8px 20px rgba(217,118,82,.35);
+      transition:transform .08s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .btn:hover{transform:translateY(-1px); background:var(--brand-strong)}
+    .btn.outline{background:#fff;color:var(--brand); box-shadow:inset 0 0 0 2px var(--brand);}
+
+    /* ===== Hero ===== */
+    .hero{padding:72px 0 40px}
+    .hero-wrap{
+      display:grid;
+      grid-template-columns: 1.35fr .65fr; /* 텍스트 영역 넓힘 */
+      align-items:center; gap:24px;
+    }
+    h1{margin:0 0 18px; font-weight:500; letter-spacing:-.2px;}  /* 볼드 해제(500) */
+    .hero h1{
+      font-size: clamp(32px, 4vw, 68px);  /* 살짝 축소 */
+      line-height:1.08;
+      white-space: normal;
+      text-wrap: balance;
+    }
+    .hero h1 br{display:inline}
+    .lead{color:var(--muted);max-width:56ch}
+    .hero-cta{margin-top:26px}
+    .sticker{
+      width:min(680px,100%);
+      border-radius:44px; background:#fff; padding:16px;
+      box-shadow:0 0 0 14px #fff, var(--soft-shadow);
+      transform: translateX(-24px); /* 오른쪽 이미지 조금 왼쪽 */
+    }
+    .sticker img{border-radius:36px}
+
+    /* Split */
+    .split{padding:40px 0 28px}
+    .split-wrap{display:grid; grid-template-columns:1.08fr .92fr; gap:60px; align-items:center}
+    .wide-img{border-radius:28px; box-shadow:var(--card-shadow); overflow:hidden;}
+    .kicker{font-weight:800; font-size:28px; line-height:1.25; letter-spacing:-.2px}
+    .sub{color:var(--muted); margin-top:10px}
+
+    /* Center + cards */
+    .center{padding:34px 0 18px; text-align:center;}
+    .center h2{font-size: clamp(28px, 3.2vw, 44px); color:#CF6E4F; letter-spacing:-.2px; margin:0 0 10px; font-weight:900;}
+    .center p{color:var(--muted); margin:.2rem 0}
+    .cards{margin:34px auto 14px; display:grid; grid-template-columns: repeat(3, 1fr); gap:36px;}
+    .card{border-radius:24px; overflow:hidden; box-shadow:var(--card-shadow); background:#fff;}
+
+    /* 텍스트 + 버튼 한 줄 */
+    .below-row{
+      margin:18px auto 6px;
+      display:flex; align-items:center; justify-content:space-between; gap:28px;
+      text-align:left; max-width:1180px;
+    }
+    .below-text{flex:1 1 820px; max-width:920px; margin:0}
+    .below-text p{margin:.35rem 0; color:#111827; font-size:20px; line-height:1.55; font-weight:500}
+    .below-row .btn{flex:0 0 auto; padding:14px 28px; border-radius:999px; background:var(--brand); color:#fff; box-shadow:0 8px 20px rgba(217,118,82,.35)}
+
+    /* Subscribe (상단 줄 제거) */
+    .subscribe{margin-top:0; padding-top:56px; position:relative; padding-bottom:180px; background:#fff; isolation:isolate; overflow:hidden}
+    .bg-cat{
+      position:absolute; left:0; right:0; bottom:0; height:320px; width:100%; object-fit:cover;
+      opacity:.22; filter:grayscale(.1); z-index:-1;
+      -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
+              mask-image: linear-gradient(to top, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
+    }
+    .sub-card{
+      width:min(1040px, 92%); margin:0 auto; background:#1C2A3A; color:#fff; border-radius:24px;
+      padding:24px 28px; box-shadow:0 14px 36px rgba(0,0,0,.28);
+      display:grid; grid-template-columns:1fr 520px; align-items:center; gap:16px;
+    }
+    .sub-title{margin:0 0 8px; font-weight:900; font-size: clamp(22px, 2.4vw, 28px)}
+    .sub-desc{margin:3px 0; color:#B8C2CF}
+    .sub-card form{justify-self:end; width:100%}
+    .input-wrap{
+      display:flex; align-items:center; gap:12px; width:100%;
+      max-width:520px; background:#fff; border-radius:999px; padding:6px 6px 6px 14px;
+      box-shadow:0 2px 0 rgba(0,0,0,.04), inset 0 0 0 1px #E5E7EB;
+    }
+    .input-wrap input{border:0; outline:0; font-size:15px; width:100%; background:transparent;}
+    .input-wrap .btn{margin-left:8px; padding:10px 18px}
+
+    /* Footer */
+    footer{padding:26px 0 60px; background:#fff}
+    .foot{display:flex; align-items:center; justify-content:space-between; gap:16px;}
+    footer .brand-img{height:40px} /* 하단 로고 크기 */
+    .social{display:flex; gap:14px}
+    .social a{width:40px; height:40px; border-radius:50%; display:grid; place-items:center; background:#EA8C63; color:#fff; box-shadow:0 8px 18px rgba(217,118,82,.35)}
+
+    /* 흰 배경 섹션 */
+    .split, .center, .subscribe { background:#ffffff; }
+
+    /* Thank-you modal */
+    .overlay{position:fixed; inset:0; background:rgba(15,23,42,.35); display:grid; place-items:center; opacity:0; pointer-events:none; transition:opacity .2s ease; z-index:1000}
+    .overlay.is-open{opacity:1; pointer-events:auto}
+    .thank-modal{width:min(760px, 94%)}
+    .thank-card{position:relative; border-radius:28px; overflow:hidden; background:#F6EDE3; padding:28px 22px 32px; box-shadow:0 20px 60px rgba(0,0,0,.28); background-image:url('./images/confetti.svg'); background-size:cover; background-position:center; text-align:center}
+    .cat-badge{width:112px; height:112px; border-radius:50%; overflow:hidden; margin:-12px auto 8px; box-shadow:0 8px 22px rgba(0,0,0,.25)}
+    .cat-badge img{width:100%; height:100%; object-fit:cover}
+    .thank-title{font-size: clamp(28px, 4.5vw, 48px); margin:10px 0 6px; color:#D97652; font-weight:900}
+    .thank-desc{margin:8px 0 22px; color:#111827; font-size:18px}
+    .thank-btn{font-size:18px; padding:14px 26px; border-radius:999px}
+
+    /* Responsive */
+    @media (max-width:1100px){
+      .hero-wrap{grid-template-columns:1.25fr .75fr}
+      .hero h1{font-size: clamp(30px, 5vw, 60px)}
+    }
+    @media (max-width:980px){
+      .hero-wrap,.split-wrap{grid-template-columns:1fr}
+      .sticker{transform:none; width:min(560px,100%); margin:0 auto}
+      .cards{grid-template-columns:1fr 1fr}
+      .foot{flex-direction:column; gap:18px}
+      .hero h1{font-size: clamp(26px, 7vw, 40px)}
+      .below-row{flex-direction:column; align-items:flex-start; gap:12px}
+      .sub-card{grid-template-columns:1fr; gap:16px}
+      .sub-card form{justify-self:stretch}
+    }
+    @media (max-width:640px){
+      .cards{grid-template-columns:1fr}
+      .nav{height:auto; padding:14px 0 10px}
+      .links{gap:16px; flex-wrap:wrap}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="container nav">
+      <!-- 상단 로고(이미지) -->
+      <img class="brand-img" src="./images/logo.png" alt="HODU 로고">
+      <nav class="links">
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Support</a>
+        <a class="btn" href="#">Download</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-wrap">
+      <div>
+        <h1>Lorem Ipsum is simply<br>dummy text of the printing and</h1>
+        <p class="lead">
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+          Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown
+        </p>
+        <div class="hero-cta"><a class="btn" href="#">Download</a></div>
+      </div>
+      <div class="sticker">
+        <img src="./images/box-cat.png" alt="Cat wearing a box" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Split section -->
+  <section class="split">
+    <div class="container split-wrap">
+      <figure class="wide-img">
+        <img src="./images/img_4.jpg" alt="Cat on bed">
+      </figure>
+      <div>
+        <div class="kicker">Lorem Ipsum is simply<br>dummy text of the printing<br>and dummy text</div>
+        <p class="sub">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Center title + cards -->
+  <section class="center">
+    <div class="container">
+      <h2>dummy text of the printing and dummy</h2>
+      <p>Lorem Ipsum is simply <strong>dummy text</strong> of the printing and typesetting industry.</p>
+      <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown</p>
+
+      <div class="cards">
+        <div class="card"><img src="./images/img_1.jpg" alt="Cat 1"></div>
+        <div class="card"><img src="./images/img_2.jpg" alt="Cat 2"></div>
+        <div class="card"><img src="./images/img_3.jpg" alt="Cat 3"></div>
+      </div>
+
+      <!-- 텍스트 + 버튼 한 줄 -->
+      <div class="below-row">
+        <div class="below-text">
+          <p>
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown
+            Ipsum is simply dummy text of the printing and typesetting industry.
+          </p>
+        </div>
+        <a class="btn" href="#">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Subscribe -->
+  <section class="subscribe">
+    <img class="bg-cat" src="./images/img_5.jpg" alt="">
+    <div class="sub-card">
+      <div>
+        <h3 class="sub-title">Subscribe to our Blog post</h3>
+        <p class="sub-desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+        <p class="sub-desc">Lorem Ipsum has been the industry’s standard dummy text</p>
+      </div>
+      <form id="subscribe-form" class="input-wrap">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 6h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z" stroke="#9CA3AF" stroke-width="1.8" />
+          <path d="M22 8 12 13 2 8" stroke="#9CA3AF" stroke-width="1.8" fill="none"/>
+        </svg>
+        <input type="email" placeholder="Enter your e-mail address" required>
+        <button class="btn" type="submit">Subscribe</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container foot">
+      <!-- 하단 로고(이미지) -->
+      <img class="brand-img" src="./images/logo.png" alt="HODU 로고">
+      <div class="social">
+        <a href="#" aria-label="Blog (b)">b</a>
+        <a href="#" aria-label="Instagram">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <rect x="3" y="3" width="18" height="18" rx="5" stroke="white" stroke-width="2"/>
+            <circle cx="12" cy="12" r="4" stroke="white" stroke-width="2"/>
+            <circle cx="17.5" cy="6.5" r="1.2" fill="white"/>
+          </svg>
+        </a>
+        <a href="#" aria-label="Facebook">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M15 4h-2a4 4 0 0 0-4 4v2H7v3h2v7h3v-7h2.2l.8-3H12V8a1 1 0 0 1 1-1h2V4z"/></svg>
+        </a>
+        <a href="#" aria-label="YouTube">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M10 8l6 4-6 4V8z"/></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Thank-you Modal -->
+  <div id="thankOverlay" class="overlay" aria-hidden="true">
+    <div class="thank-modal" role="dialog" aria-labelledby="thankTitle" aria-describedby="thankDesc">
+      <div class="thank-card">
+        <div class="cat-badge"><img src="./images/cat-avatar.png" alt="HODU cat face"></div>
+        <h3 id="thankTitle" class="thank-title">Thank you!</h3>
+        <p id="thankDesc" class="thank-desc">Lorem Ipsum is simply dummy text of the printing industry.</p>
+        <button type="button" class="btn thank-btn" id="thankOk">OK! I Love HODU</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const form = document.getElementById('subscribe-form');
+      const overlay = document.getElementById('thankOverlay');
+      const okBtn = document.getElementById('thankOk');
+
+      function openModal(){ overlay.classList.add('is-open'); document.body.classList.add('modal-open'); setTimeout(()=> okBtn && okBtn.focus(), 0); }
+      function closeModal(){ overlay.classList.remove('is-open'); document.body.classList.remove('modal-open'); }
+
+      if(form){
+        form.addEventListener('submit', function(e){
+          e.preventDefault();
+          openModal();
+          form.reset();
+        });
+      }
+      overlay.addEventListener('click', (e)=>{ if(e.target === overlay) closeModal(); });
+      okBtn.addEventListener('click', closeModal);
+      window.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeModal(); });
+    })();
+  </script>
+</body>
+</html>
